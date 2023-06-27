@@ -100,7 +100,7 @@ Types = {
     }
 };
 
-var kinds = {
+let kinds = {
     warrior: [Types.Entities.WARRIOR, "player"],
     
     rat: [Types.Entities.RAT, "mob"],
@@ -244,7 +244,7 @@ Types.getKindFromString = function(kind) {
 };
 
 Types.getKindAsString = function(kind) {
-    for(var k in kinds) {
+    for(let k in kinds) {
         if(kinds[k][0] === kind) {
             return k;
         }
@@ -252,7 +252,7 @@ Types.getKindAsString = function(kind) {
 };
 
 Types.forEachKind = function(callback) {
-    for(var k in kinds) {
+    for(let k in kinds) {
         callback(kinds[k][0], k);
     }
 };
@@ -291,7 +291,7 @@ Types.getOrientationAsString = function(orientation) {
 };
 
 Types.getRandomItemKind = function(item) {
-    var all = _.union(this.rankedWeapons, this.rankedArmors),
+    let all = _.union(this.rankedWeapons, this.rankedArmors),
         forbidden = [Types.Entities.SWORD1, Types.Entities.CLOTHARMOR],
         itemKinds = _.difference(all, forbidden),
         i = Math.floor(Math.random() * _.size(itemKinds));
@@ -300,7 +300,7 @@ Types.getRandomItemKind = function(item) {
 };
 
 Types.getMessageTypeAsString = function(type) {
-    var typeName;
+    let typeName;
     _.each(Types.Messages, function(value, name) {
         if(value === type) {
             typeName = name;
