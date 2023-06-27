@@ -1,7 +1,7 @@
 
 define(function() {
 
-    var Camera = Class.extend({
+    let Camera = Class.extend({
         init: function(renderer) {
             this.renderer = renderer;
             this.x = 0;
@@ -13,7 +13,7 @@ define(function() {
         },
     
         rescale: function() {
-            var factor = this.renderer.mobile ? 1 : 2;
+            let factor = this.renderer.mobile ? 1 : 2;
         
             this.gridW = 15 * factor;
             this.gridH = 7 * factor;
@@ -40,7 +40,7 @@ define(function() {
         },
 
         lookAt: function(entity) {
-            var r = this.renderer,
+            let r = this.renderer,
                 x = Math.round( entity.x - (Math.floor(this.gridW / 2) * r.tilesize) ),
                 y = Math.round( entity.y - (Math.floor(this.gridH / 2) * r.tilesize) );
     
@@ -48,9 +48,9 @@ define(function() {
         },
 
         forEachVisiblePosition: function(callback, extra) {
-            var extra = extra || 0;
-            for(var y=this.gridY-extra, maxY=this.gridY+this.gridH+(extra*2); y < maxY; y += 1) {
-                for(var x=this.gridX-extra, maxX=this.gridX+this.gridW+(extra*2); x < maxX; x += 1) {
+            let extra = extra || 0;
+            for(let y=this.gridY-extra, maxY=this.gridY+this.gridH+(extra*2); y < maxY; y += 1) {
+                for(let x=this.gridX-extra, maxX=this.gridX+this.gridW+(extra*2); x < maxX; x += 1) {
                     callback(x, y);
                 }
             }
@@ -70,7 +70,7 @@ define(function() {
         },
     
         focusEntity: function(entity) {
-            var w = this.gridW - 2,
+            let w = this.gridW - 2,
                 h = this.gridH - 2,
                 x = Math.floor((entity.gridX - 1) / w) * w,
                 y = Math.floor((entity.gridY - 1) / h) * h;
