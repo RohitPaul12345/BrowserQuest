@@ -1,7 +1,7 @@
 
 define(['jquery', 'timer'], function($, Timer) {
 
-    var Bubble = Class.extend({
+    let Bubble = Class.extend({
         init: function(id, element, time) {
             this.id = id;
             this.element = element;
@@ -24,7 +24,7 @@ define(['jquery', 'timer'], function($, Timer) {
         }
     });
 
-    var BubbleManager = Class.extend({
+    let BubbleManager = Class.extend({
         init: function(container) {
             this.container = container;
             this.bubbles = {};
@@ -43,7 +43,7 @@ define(['jquery', 'timer'], function($, Timer) {
                 $("#"+id+" p").html(message);
             }
             else {
-                var el = $("<div id=\""+id+"\" class=\"bubble\"><p>"+message+"</p><div class=\"thingy\"></div></div>"); //.attr('id', id);
+                let el = $("<div id=\""+id+"\" class=\"bubble\"><p>"+message+"</p><div class=\"thingy\"></div></div>"); //.attr('id', id);
                 $(el).appendTo(this.container);
             
                 this.bubbles[id] = new Bubble(id, el, time);
@@ -51,7 +51,7 @@ define(['jquery', 'timer'], function($, Timer) {
         },
     
         update: function(time) {
-            var self = this,
+            let self = this,
                 bubblesToDelete = [];
         
             _.each(this.bubbles, function(bubble) {
@@ -67,7 +67,7 @@ define(['jquery', 'timer'], function($, Timer) {
         },
     
         clean: function() {
-            var self = this,
+            let self = this,
                 bubblesToDelete = [];
         
             _.each(this.bubbles, function(bubble) {
@@ -83,7 +83,7 @@ define(['jquery', 'timer'], function($, Timer) {
         },
     
         destroyBubble: function(id) {
-            var bubble = this.getBubbleById(id);
+            let bubble = this.getBubbleById(id);
         
             if(bubble) {
                 bubble.destroy();
