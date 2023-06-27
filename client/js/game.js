@@ -6,7 +6,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
          Warrior, GameClient, AudioManager, Updater, Transition, Pathfinder,
          Item, Mob, Npc, Player, Character, Chest, Mobs, Exceptions, config) {
     
-    var Game = Class.extend({
+    let Game = Class.extend({
         init: function(app) {
             this.app = app;
             this.app.config = config;
@@ -102,7 +102,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         },
 
         loadMap: function() {
-            var self = this;
+            let self = this;
     
             this.map = new Map(!this.renderer.upscaledRendering, this);
     
@@ -148,7 +148,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         },
     
         initHurtSprites: function() {
-            var self = this;
+            let self = this;
         
             Types.forEachArmorKind(function(kind, kindName) {
                 self.sprites[kindName].createHurtSprite();
@@ -156,7 +156,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         },
     
         initSilhouettes: function() {
-            var self = this;
+            let self = this;
 
             Types.forEachMobOrNpcKind(function(kind, kindName) {
                 self.sprites[kindName].createSilhouette();
@@ -166,7 +166,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         },
     
         initAchievements: function() {
-            var self = this;
+            let self = this;
         
             this.achievements = {
                 A_TRUE_WARRIOR: {
@@ -306,7 +306,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         },
     
         getAchievementById: function(id) {
-            var found = null;
+            let found = null;
             _.each(this.achievements, function(achievement, key) {
                 if(achievement.id === parseInt(id)) {
                     found = achievement;
@@ -327,7 +327,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         },
     
         setSpriteScale: function(scale) {
-            var self = this;
+            let self = this;
             
             if(this.renderer.upscaledRendering) {
                 this.sprites = this.spritesets[0];
@@ -404,7 +404,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         },
 
         addEntity: function(entity) {
-            var self = this;
+            let self = this;
             
             if(this.entities[entity.id] === undefined) {
                 this.entities[entity.id] = entity;
@@ -458,9 +458,9 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
     
         initPathingGrid: function() {
             this.pathingGrid = [];
-            for(var i=0; i < this.map.height; i += 1) {
+            for(let i=0; i < this.map.height; i += 1) {
                 this.pathingGrid[i] = [];
-                for(var j=0; j < this.map.width; j += 1) {
+                for(let j=0; j < this.map.width; j += 1) {
                     this.pathingGrid[i][j] = this.map.grid[i][j];
                 }
             }
@@ -469,9 +469,9 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
     
         initEntityGrid: function() {
             this.entityGrid = [];
-            for(var i=0; i < this.map.height; i += 1) {
+            for(let i=0; i < this.map.height; i += 1) {
                 this.entityGrid[i] = [];
-                for(var j=0; j < this.map.width; j += 1) {
+                for(let j=0; j < this.map.width; j += 1) {
                     this.entityGrid[i][j] = {};
                 }
             }
@@ -480,9 +480,9 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
     
         initRenderingGrid: function() {
             this.renderingGrid = [];
-            for(var i=0; i < this.map.height; i += 1) {
+            for(let i=0; i < this.map.height; i += 1) {
                 this.renderingGrid[i] = [];
-                for(var j=0; j < this.map.width; j += 1) {
+                for(let j=0; j < this.map.width; j += 1) {
                     this.renderingGrid[i][j] = {};
                 }
             }
@@ -491,9 +491,9 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
     
         initItemGrid: function() {
             this.itemGrid = [];
-            for(var i=0; i < this.map.height; i += 1) {
+            for(let i=0; i < this.map.height; i += 1) {
                 this.itemGrid[i] = [];
-                for(var j=0; j < this.map.width; j += 1) {
+                for(let j=0; j < this.map.width; j += 1) {
                     this.itemGrid[i][j] = {};
                 }
             }
@@ -504,13 +504,13 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
          * 
          */
         initAnimatedTiles: function() {
-            var self = this,
+            let self = this,
                 m = this.map;
 
             this.animatedTiles = [];
             this.forEachVisibleTile(function (id, index) {
                 if(m.isAnimatedTile(id)) {
-                    var tile = new AnimatedTile(id, m.getTileAnimationLength(id), m.getTileAnimationDelay(id), index),
+                    let tile = new AnimatedTile(id, m.getTileAnimationLength(id), m.getTileAnimationDelay(id), index),
                         pos = self.map.tileIndexToGridPosition(tile.index);
                     
                     tile.x = pos.x;
@@ -591,7 +591,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         },
     
         registerEntityPosition: function(entity) {
-            var x = entity.gridX,
+            let x = entity.gridX,
                 y = entity.gridY;
         
             if(entity) {
@@ -620,14 +620,14 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         },
     
         initMusicAreas: function() {
-            var self = this;
+            let self = this;
             _.each(this.map.musicAreas, function(area) {
                 self.audioManager.addArea(area.x, area.y, area.w, area.h, area.id);
             });
         },
 
         run: function(started_callback) {
-            var self = this;
+            let self = this;
         
             this.loadSprites();
             this.setUpdater(new Updater(this));
@@ -635,7 +635,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         
             this.setSpriteScale(this.renderer.scale);
         
-        	var wait = setInterval(function() {
+        	let wait = setInterval(function() {
                 if(self.map.isLoaded && self.spritesLoaded()) {
                     self.ready = true;
                     log.debug('All sprites loaded.');
@@ -711,13 +711,13 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         },
 
         connect: function(started_callback) {
-            var self = this,
+            let self = this,
                 connecting = false; // always in dispatcher mode in the build version
     
             this.client = new GameClient(this.host, this.port);
             
             //>>excludeStart("prodHost", pragmas.prodHost);
-            var config = this.app.config.local || this.app.config.dev;
+            let config = this.app.config.local || this.app.config.dev;
             if(config) {
                 this.client.connect(config.dispatcher); // false if the client connects directly to a game server
                 connecting = true;
@@ -748,7 +748,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             });
         
             this.client.onEntityList(function(list) {
-                var entityIds = _.pluck(self.entities, 'id'),
+                let entityIds = _.pluck(self.entities, 'id'),
                     knownIds = _.intersection(entityIds, list),
                     newIds = _.difference(list, knownIds);
             
@@ -799,7 +799,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 }
         
                 self.player.onStartPathing(function(path) {
-                    var i = path.length - 1,
+                    let i = path.length - 1,
                         x =  path[i][0],
                         y =  path[i][1];
                 
@@ -840,7 +840,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 });
 
                 self.player.onBeforeStep(function() {
-                    var blockingEntity = self.getEntityAt(self.player.nextGridX, self.player.nextGridY);
+                    let blockingEntity = self.getEntityAt(self.player.nextGridX, self.player.nextGridY);
                     if(blockingEntity && blockingEntity.id !== self.playerId) {
                         log.debug("Blocked by " + blockingEntity.id);
                     }
@@ -899,7 +899,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                     self.selectedCellVisible = false;
                 
                     if(self.isItemAt(x, y)) {
-                        var item = self.getItemAt(x, y);
+                        let item = self.getItemAt(x, y);
                     
                         try {
                             self.player.loot(item);
@@ -1008,7 +1008,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 });
             
                 self.player.onRequestPath(function(x, y) {
-                    var ignored = [self.player]; // Always ignore self
+                    let ignored = [self.player]; // Always ignore self
                 
                     if(self.player.hasTarget()) {
                         ignored.push(self.player.target);
@@ -1129,11 +1129,11 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                                             }
                                 
                                             if(entity instanceof Player) {
-                                                var gridX = entity.destination.gridX,
+                                                let gridX = entity.destination.gridX,
                                                     gridY = entity.destination.gridY;
 
                                                 if(self.map.isDoor(gridX, gridY)) {
-                                                    var dest = self.map.getDoorDestination(gridX, gridY);
+                                                    let dest = self.map.getDoorDestination(gridX, gridY);
                                                     entity.setGridPosition(dest.x, dest.y);
                                                 }
                                             }
@@ -1150,7 +1150,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                                     });
 
                                     entity.onRequestPath(function(x, y) {
-                                        var ignored = [entity], // Always ignore self
+                                        let ignored = [entity], // Always ignore self
                                             ignoreTarget = function(target) {
                                                 ignored.push(target);
 
@@ -1216,7 +1216,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
 
                                     if(entity instanceof Mob) {
                                         if(targetId) {
-                                            var player = self.getEntityById(targetId);
+                                            let player = self.getEntityById(targetId);
                                             if(player) {
                                                 self.createAttackLink(entity, player);
                                             }
@@ -1234,7 +1234,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 });
 
                 self.client.onDespawnEntity(function(entityId) {
-                    var entity = self.getEntityById(entityId);
+                    let entity = self.getEntityById(entityId);
             
                     if(entity) {
                         log.info("Despawning " + Types.getKindAsString(entity.kind) + " (" + entity.id+ ")");
@@ -1262,7 +1262,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 });
             
                 self.client.onItemBlink(function(id) {
-                    var item = self.getEntityById(id);
+                    let item = self.getEntityById(id);
 
                     if(item) {
                         item.blink(150);
@@ -1270,7 +1270,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 });
 
                 self.client.onEntityMove(function(id, x, y) {
-                    var entity = null;
+                    let entity = null;
 
                     if(id !== self.playerId) {
                         entity = self.getEntityById(id);
@@ -1287,7 +1287,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 });
             
                 self.client.onEntityDestroy(function(id) {
-                    var entity = self.getEntityById(id);
+                    let entity = self.getEntityById(id);
                     if(entity) {
                         if(entity instanceof Item) {
                             self.removeItem(entity);
@@ -1299,7 +1299,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 });
             
                 self.client.onPlayerMoveToItem(function(playerId, itemId) {
-                    var player, item;
+                    let player, item;
 
                     if(playerId !== self.playerId) {
                         player = self.getEntityById(playerId);
@@ -1312,7 +1312,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 });
             
                 self.client.onEntityAttack(function(attackerId, targetId) {
-                    var attacker = self.getEntityById(attackerId),
+                    let attacker = self.getEntityById(attackerId),
                         target = self.getEntityById(targetId);
                 
                     if(attacker && target && attacker.id !== self.playerId) {
@@ -1329,14 +1329,14 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 });
             
                 self.client.onPlayerDamageMob(function(mobId, points) {
-                    var mob = self.getEntityById(mobId);
+                    let mob = self.getEntityById(mobId);
                     if(mob && points) {
                         self.infoManager.addDamageInfo(points, mob.x, mob.y - 15, "inflicted");
                     }
                 });
             
                 self.client.onPlayerKillMob(function(kind) {
-                    var mobName = Types.getKindAsString(kind);
+                    let mobName = Types.getKindAsString(kind);
                     
                     if(mobName === 'skeleton2') {
                         mobName = 'greater skeleton';
@@ -1379,7 +1379,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 });
             
                 self.client.onPlayerChangeHealth(function(points, isRegen) {
-                    var player = self.player,
+                    let player = self.player,
                         diff,
                         isHurt;
                 
@@ -1414,7 +1414,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 });
             
                 self.client.onPlayerEquipItem(function(playerId, itemKind) {
-                    var player = self.getEntityById(playerId),
+                    let player = self.getEntityById(playerId),
                         itemName = Types.getKindAsString(itemKind);
                 
                     if(player) {
@@ -1427,7 +1427,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 });
             
                 self.client.onPlayerTeleport(function(id, x, y) {
-                    var entity = null,
+                    let entity = null,
                         currentOrientation;
 
                     if(id !== self.playerId) {
@@ -1449,7 +1449,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 });
             
                 self.client.onDropItem(function(item, mobId) {
-                    var pos = self.getDeadMobPosition(mobId);
+                    let pos = self.getDeadMobPosition(mobId);
                 
                     if(pos) {
                         self.addItem(item, pos.x, pos.y);
@@ -1458,7 +1458,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 });
             
                 self.client.onChatMessage(function(entityId, message) {
-                    var entity = self.getEntityById(entityId);
+                    let entity = self.getEntityById(entityId);
                     self.createBubble(entityId, message);
                     self.assignBubbleTo(entity);
                     self.audioManager.playSound("chat");
@@ -1519,7 +1519,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
          * @returns {Object} An object containing x and y properties.
          */
         getMouseGridPosition: function() {
-            var mx = this.mouse.x,
+            let mx = this.mouse.x,
                 my = this.mouse.y,
                 c = this.renderer.camera,
                 s = this.renderer.scale,
@@ -1609,7 +1609,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
          *
          */
         makeNpcTalk: function(npc) {
-            var msg;
+            let msg;
         
             if(npc) {
                 msg = npc.talk();
@@ -1658,7 +1658,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
          * Note: This is used by the Renderer to know in which order to render entities.
          */
         forEachVisibleEntityByDepth: function(callback) {
-            var self = this,
+            let self = this,
                 m = this.map;
         
             this.camera.forEachVisiblePosition(function(x, y) {
@@ -1676,7 +1676,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
          * 
          */    
         forEachVisibleTileIndex: function(callback, extra) {
-            var m = this.map;
+            let m = this.map;
         
             this.camera.forEachVisiblePosition(function(x, y) {
                 if(!m.isOutOfBounds(x, y)) {
@@ -1689,7 +1689,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
          * 
          */
         forEachVisibleTile: function(callback, extra) {
-            var self = this,
+            let self = this,
                 m = this.map;
         
             if(m.isLoaded) {
@@ -1730,7 +1730,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 return null;
             }
             
-            var entities = this.entityGrid[y][x],
+            let entities = this.entityGrid[y][x],
                 entity = null;
             if(_.size(entities) > 0) {
                 entity = entities[_.keys(entities)[0]];
@@ -1741,7 +1741,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         },
 
         getMobAt: function(x, y) {
-            var entity = this.getEntityAt(x, y);
+            let entity = this.getEntityAt(x, y);
             if(entity && (entity instanceof Mob)) {
                 return entity;
             }
@@ -1749,7 +1749,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         },
 
         getNpcAt: function(x, y) {
-            var entity = this.getEntityAt(x, y);
+            let entity = this.getEntityAt(x, y);
             if(entity && (entity instanceof Npc)) {
                 return entity;
             }
@@ -1757,7 +1757,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         },
 
         getChestAt: function(x, y) {
-            var entity = this.getEntityAt(x, y);
+            let entity = this.getEntityAt(x, y);
             if(entity && (entity instanceof Chest)) {
                 return entity;
             }
@@ -1768,7 +1768,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             if(this.map.isOutOfBounds(x, y) || !this.itemGrid) {
                 return null;
             }
-            var items = this.itemGrid[y][x],
+            let items = this.itemGrid[y][x],
                 item = null;
 
             if(_.size(items) > 0) {
@@ -1816,7 +1816,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
          * The path will pass through any entity present in the ignore list.
          */
         findPath: function(character, x, y, ignoreList) {
-            var self = this,
+            let self = this,
                 grid = this.pathingGrid;
                 path = [],
                 isPlayer = (character === this.player);
@@ -1869,7 +1869,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
          * 
          */
         movecursor: function() {
-            var mouse = this.getMouseGridPosition(),
+            let mouse = this.getMouseGridPosition(),
                 x = mouse.x,
                 y = mouse.y;
 
@@ -1903,7 +1903,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
          * Processes game logic when the user triggers a click/touch event during the game.
          */
         click: function() {
-            var pos = this.getMouseGridPosition(),
+            let pos = this.getMouseGridPosition(),
                 entity;
             
             if(pos.x === this.previousClickPosition.x
@@ -1945,7 +1945,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         },
         
         isMobOnSameTile: function(mob, x, y) {
-            var X = x || mob.gridX,
+            let X = x || mob.gridX,
                 Y = y || mob.gridY,
                 list = this.entityGrid[Y][X],
                 result = false;
@@ -1959,7 +1959,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         },
         
         getFreeAdjacentNonDiagonalPosition: function(entity) {
-            var self = this,
+            let self = this,
                 result = null;
             
             entity.forEachAdjacentNonDiagonalPosition(function(x, y, orientation) {
@@ -1971,12 +1971,12 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         },
         
         tryMovingToADifferentTile: function(character) {
-            var attacker = character,
+            let attacker = character,
                 target = character.target;
             
             if(attacker && target && target instanceof Player) {
                 if(!target.isMoving() && attacker.getDistanceToEntity(target) === 0) {
-                    var pos;
+                    let pos;
                     
                     switch(target.orientation) {
                         case Types.Orientations.UP:
@@ -2001,7 +2001,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 }
             
                 if(!target.isMoving() && attacker.isAdjacentNonDiagonal(target) && this.isMobOnSameTile(attacker)) {
-                    var pos = this.getFreeAdjacentNonDiagonalPosition(target);
+                    let pos = this.getFreeAdjacentNonDiagonalPosition(target);
             
                     // avoid stacking mobs on the same tile next to a player
                     // by making them go to adjacent tiles if they are available
@@ -2027,12 +2027,12 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
          * 
          */
         onCharacterUpdate: function(character) {
-            var time = this.currentTime,
+            let time = this.currentTime,
                 self = this;
             
             // If mob has finished moving to a different tile in order to avoid stacking, attack again from the new position.
             if(character.previousTarget && !character.isMoving() && character instanceof Mob) {
-                var t = character.previousTarget;
+                let t = character.previousTarget;
                 
                 if(this.getEntityById(t.id)) { // does it still exist?
                     character.previousTarget = null;
@@ -2042,7 +2042,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             }
         
             if(character.isAttacking() && !character.previousTarget) {
-                var isMoving = this.tryMovingToADifferentTile(character); // Don't let multiple mobs stack on the same tile when attacking a player.
+                let isMoving = this.tryMovingToADifferentTile(character); // Don't let multiple mobs stack on the same tile when attacking a player.
                 
                 if(character.canAttack(time)) {
                     if(!isMoving) { // don't hit target if moving to a different tile.
@@ -2079,7 +2079,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
          * 
          */
         isZoningTile: function(x, y) {
-            var c = this.camera;
+            let c = this.camera;
         
             x = x - c.gridX;
             y = y - c.gridY;
@@ -2094,7 +2094,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
          * 
          */
         getZoningOrientation: function(x, y) {
-            var orientation = "",
+            let orientation = "",
                 c = this.camera;
 
             x = x - c.gridX;
@@ -2120,7 +2120,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             this.zoningOrientation = this.getZoningOrientation(x, y);
         
             if(this.renderer.mobile || this.renderer.tablet) {
-                var z = this.zoningOrientation,
+                let z = this.zoningOrientation,
                     c = this.camera,
                     ts = this.renderer.tilesize,
                     x = c.x,
@@ -2197,10 +2197,10 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         },
     
         assignBubbleTo: function(character) {
-            var bubble = this.bubbleManager.getBubbleById(character.id);
+            let bubble = this.bubbleManager.getBubbleById(character.id);
         
             if(bubble) {
-                var s = this.renderer.scale,
+                let s = this.renderer.scale,
                     t = 16 * s, // tile size
                     x = ((character.x - this.camera.x) * s),
                     w = parseInt(bubble.element.css('width')) + 24,
@@ -2290,7 +2290,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         },
     
         resize: function() {
-            var x = this.camera.x,
+            let x = this.camera.x,
                 y = this.camera.y,
                 currentScale = this.renderer.scale,
                 newScale = this.renderer.getScaleFactor();
@@ -2309,7 +2309,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         },
     
         getDeadMobPosition: function(mobId) {
-            var position;
+            let position;
 
             if(mobId in this.deathpositions) {
                 position = this.deathpositions[mobId];
@@ -2324,7 +2324,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         },
     
         tryUnlockingAchievement: function(name) {
-            var achievement = null;
+            let achievement = null;
             if(name in this.achievements) {
                 achievement = this.achievements[name];
             
@@ -2344,7 +2344,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         },
 
         removeObsoleteEntities: function() {
-            var nb = _.size(this.obsoleteEntities),
+            let nb = _.size(this.obsoleteEntities),
                 self = this;
         
             if(nb > 0) {
@@ -2381,7 +2381,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         },
     
         updatePlayerCheckpoint: function() {
-            var checkpoint = this.map.getCurrentCheckpoint(this.player);
+            let checkpoint = this.map.getCurrentCheckpoint(this.player);
         
             if(checkpoint) {
                 var lastCheckpoint = this.player.lastCheckpoint;
@@ -2393,7 +2393,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         },
         
         checkUndergroundAchievement: function() {
-            var music = this.audioManager.getSurroundingMusic(this.player);
+            let music = this.audioManager.getSurroundingMusic(this.player);
 
             if(music) {
                 if(music.name === 'cave') {
@@ -2403,8 +2403,8 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         },
         
         forEachEntityAround: function(x, y, r, callback) {
-            for(var i = x-r, max_i = x+r; i <= max_i; i += 1) {
-                for(var j = y-r, max_j = y+r; j <= max_j; j += 1) {
+            for(let i = x-r, max_i = x+r; i <= max_i; i += 1) {
+                for(let j = y-r, max_j = y+r; j <= max_j; j += 1) {
                     if(!this.map.isOutOfBounds(i, j)) {
                         _.each(this.renderingGrid[j][i], function(entity) {
                             callback(entity);
@@ -2415,14 +2415,14 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         },
         
         checkOtherDirtyRects: function(r1, source, x, y) {
-            var r = this.renderer;
+            let r = this.renderer;
             
             this.forEachEntityAround(x, y, 2, function(e2) {
                 if(source && source.id && e2.id === source.id) {
                     return;
                 }
                 if(!e2.isDirty) {
-                    var r2 = r.getEntityBoundingRect(e2);
+                    let r2 = r.getEntityBoundingRect(e2);
                     if(r.isIntersecting(r1, r2)) {
                         e2.setDirty();
                     }
@@ -2432,7 +2432,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             if(source && !(source.hasOwnProperty("index"))) {
                 this.forEachAnimatedTile(function(tile) {
                     if(!tile.isDirty) {
-                        var r2 = r.getTileBoundingRect(tile);
+                        let r2 = r.getTileBoundingRect(tile);
                         if(r.isIntersecting(r1, r2)) {
                             tile.isDirty = true;
                         }
@@ -2441,7 +2441,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             }
             
             if(!this.drawTarget && this.selectedCellVisible) {
-                var targetRect = r.getTargetBoundingRect();
+                let targetRect = r.getTargetBoundingRect();
                 if(r.isIntersecting(r1, targetRect)) {
                     this.drawTarget = true;
                     this.renderer.targetRect = targetRect;
