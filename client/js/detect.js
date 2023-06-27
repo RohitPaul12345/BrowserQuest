@@ -1,5 +1,5 @@
 
-var Detect = {};
+let Detect = {};
 
 Detect.supportsWebSocket = function() {
     return window.WebSocket || window.MozWebSocket;
