@@ -1,7 +1,7 @@
 
 define(function() {
 
-    var Animation = Class.extend({
+    let Animation = Class.extend({
         init: function(name, length, row, width, height) {
             this.name = name;
         	this.length = length;
@@ -12,7 +12,7 @@ define(function() {
         },
     
         tick: function() {
-        	var i = this.currentFrame.index;
+        	let i = this.currentFrame.index;
 	    
     	    i = (i < this.length - 1) ? i + 1 : 0;
 	    
