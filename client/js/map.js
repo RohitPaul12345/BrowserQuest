@@ -1,7 +1,7 @@
 
 define(['jquery', 'area'], function($, Area) {
     
-    var Map = Class.extend({
+    let Map = Class.extend({
         init: function(loadMultiTilesheets, game) {
             this.game = game;
         	this.data = [];
@@ -10,7 +10,7 @@ define(['jquery', 'area'], function($, Area) {
         	this.mapLoaded = false;
         	this.loadMultiTilesheets = loadMultiTilesheets;
         	
-        	var useWorker = !(this.game.renderer.mobile || this.game.renderer.tablet);
+        	let useWorker = !(this.game.renderer.mobile || this.game.renderer.tablet);
 
         	this._loadMap(useWorker);
         	this._initTilesets();
@@ -26,16 +26,16 @@ define(['jquery', 'area'], function($, Area) {
         },
 
         _loadMap: function(useWorker) {
-        	var self = this,
+        	let self = this,
         	    filepath = "maps/world_client.json";
         	
         	if(useWorker) {
         	    log.info("Loading map with web worker.");
-                var worker = new Worker('js/mapworker.js');
+                let worker = new Worker('js/mapworker.js');
                 worker.postMessage(1);
             
                 worker.onmessage = function(event) {
-                    var map = event.data;
+                    let map = event.data;
                     self._initMap(map);
                     self.grid = map.grid;
                     self.plateauGrid = map.plateauGrid;
@@ -55,7 +55,7 @@ define(['jquery', 'area'], function($, Area) {
         },
         
         _initTilesets: function() {
-            var tileset1, tileset2, tileset3;
+            let tileset1, tileset2, tileset3;
             
             if(!this.loadMultiTilesheets) {
                 this.tilesetCount = 1;
@@ -91,7 +91,7 @@ define(['jquery', 'area'], function($, Area) {
         },
     
         _getDoors: function(map) {
-            var doors = {},
+            let doors = {},
                 self = this;
 
             _.each(map.doors, function(door) {
@@ -123,8 +123,8 @@ define(['jquery', 'area'], function($, Area) {
         },
 
         _loadTileset: function(filepath) {
-        	var self = this;
-    	    var tileset = new Image();
+        	let self = this;
+    	    let tileset = new Image();
     	
         	tileset.src = filepath;
     
@@ -153,10 +153,10 @@ define(['jquery', 'area'], function($, Area) {
         },
 
         tileIndexToGridPosition: function(tileNum) {
-            var x = 0,
+            let x = 0,
                 y = 0;
         
-            var getX = function(num, w) {
+            let getX = function(num, w) {
                 if(num == 0) {
                     return 0;
                 }
@@ -189,7 +189,7 @@ define(['jquery', 'area'], function($, Area) {
         },
         
         _generateCollisionGrid: function() {
-            var tileIndex = 0,
+            let tileIndex = 0,
                 self = this;
 
             this.grid = [];
@@ -201,12 +201,12 @@ define(['jquery', 'area'], function($, Area) {
             }
 
             _.each(this.collisions, function(tileIndex) {
-                var pos = self.tileIndexToGridPosition(tileIndex+1);
+                let pos = self.tileIndexToGridPosition(tileIndex+1);
                 self.grid[pos.y][pos.x] = 1;
             });
 
             _.each(this.blocking, function(tileIndex) {
-                var pos = self.tileIndexToGridPosition(tileIndex+1);
+                let pos = self.tileIndexToGridPosition(tileIndex+1);
                 if(self.grid[pos.y] !== undefined) {
                     self.grid[pos.y][pos.x] = 1;
                 }
@@ -215,10 +215,10 @@ define(['jquery', 'area'], function($, Area) {
         },
 
         _generatePlateauGrid: function() {
-            var tileIndex = 0;
+            let tileIndex = 0;
 
             this.plateauGrid = [];
-            for(var	j, i = 0; i < this.height; i++) {
+            for(let	j, i = 0; i < this.height; i++) {
                 this.plateauGrid[i] = [];
                 for(j = 0; j < this.width; j++) {
                     if(_.include(this.plateau, tileIndex)) {
@@ -272,7 +272,7 @@ define(['jquery', 'area'], function($, Area) {
          * 
          */
         getTileAnimationDelay: function(id) {
-            var animProperties = this.animated[id+1];
+            let animProperties = this.animated[id+1];
             if(animProperties.d) {
                 return animProperties.d;
             } else {
@@ -289,9 +289,9 @@ define(['jquery', 'area'], function($, Area) {
         },
 
         _getCheckpoints: function(map) {
-            var checkpoints = [];
+            let checkpoints = [];
             _.each(map.checkpoints, function(cp) {
-                var area = new Area(cp.x, cp.y, cp.w, cp.h);
+                let area = new Area(cp.x, cp.y, cp.w, cp.h);
                 area.id = cp.id;
                 checkpoints.push(area);
             });
